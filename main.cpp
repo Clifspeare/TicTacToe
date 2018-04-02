@@ -1,14 +1,16 @@
 #include <SFML/Window.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include "SpriteNode.h"
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window/Mouse.hpp>
+
+#include "GameBoard.h"
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(375, 375), "TicTacToe");
 
     sf::Texture texture;
     texture.loadFromFile("board.png");
-    SpriteNode root(texture);
+    GameBoard root(texture);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -18,8 +20,8 @@ int main() {
                 case sf::Event::Closed:
                     window.close();
                     break;
-                case sf::Event::KeyPressed:
-                    // do
+                case sf::Event::MouseButtonPressed:
+                    root.handleClickEvent(event.mouseButton.x, event.mouseButton.y);
                     break;
             }
         }

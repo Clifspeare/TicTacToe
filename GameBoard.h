@@ -13,12 +13,15 @@ class GameBoard : public SpriteNode
 public:
     GameBoard(sf::Texture& texture);
 
-    int getClickedSquare(sf::Vector2f coordinate);
+    void handleClickEvent(double x, double y);
 private:
+    int getClickedSquare(sf::Vector2f coordinate);
+    void placeX(int index);
+
     /*
      * Represents the 9 possible locations on a 3x3 grid by index 1-9.
      */
-    int m_boardSquares[];
+    int *m_boardSquares;
 };
 
 

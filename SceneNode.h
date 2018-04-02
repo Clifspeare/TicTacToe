@@ -16,6 +16,7 @@ public:
     void attachChild(Ptr node);
     Ptr detachChild(const SceneNode &node);
 
+    // rendering
     void draw(sf::RenderTarget& target, sf::RenderStates renderStates) const final;
 private:
     virtual void onDraw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
