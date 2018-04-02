@@ -16,7 +16,8 @@ public:
     void handleClickEvent(double x, double y);
 private:
     int getClickedSquare(sf::Vector2f coordinate);
-    void placeX(int index);
+    void placeMark(int index, sf::Texture& texture);
+    int lastPlaced = 0; //1 - x, 2 - o
 
     /*
      * Represents the 9 possible locations on a 3x3 grid by index 1-9.

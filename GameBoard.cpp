@@ -43,19 +43,25 @@ void GameBoard::handleClickEvent(double x, double y)
 {
     sf::Vector2f clickCoordinate(x, y);
     int indexOfClickedSquare = getClickedSquare(clickCoordinate);
-    placeX(indexOfClickedSquare);
+    auto texture = new sf::Texture();
+    if (lastPlaced == 0 || lastPlaced == 2) {
+        texture->loadFromFile("X.png");
+        lastPlaced = 1;
+    }
+    else {
+        texture->loadFromFile("O.png");
+        lastPlaced = 2;
+    }
+    placeMark(indexOfClickedSquare, *texture);
 }
 
-void GameBoard::placeX(int index)
+void GameBoard::placeMark(int index, sf::Texture& texture)
 {
     float marginOffset = 25.0f / 2;
     float stepOffset = 75.0f;
 
     if (index != -1) {
-        sf::Texture* texture = new sf::Texture();
-        texture->loadFromFile("X.png");
-        std::unique_ptr<SpriteNode> xNode(new SpriteNode(*texture));
-        std::cout << index << std::endl;
+        std::unique_ptr<SpriteNode> xNode(new SpriteNode(texture));
         xNode->move( marginOffset + (stepOffset * ((index % 3) + 1)), (stepOffset * ((index / 3) + 1)) + marginOffset);
         attachChild(std::move(xNode));
     }
