@@ -37,6 +37,9 @@ int GameBoard::getClickedSquare(sf::Vector2f coordinate)
 GameBoard::GameBoard(sf::Texture &texture) : SpriteNode(texture)
 {
     m_boardSquares = new int[9];
+    for (int i = 0; i < 9; ++i) {
+        m_boardSquares[i] = -1;
+    }
 }
 
 void GameBoard::handleClickEvent(double x, double y)
@@ -60,9 +63,10 @@ void GameBoard::placeMark(int index, sf::Texture& texture)
     float marginOffset = 25.0f / 2;
     float stepOffset = 75.0f;
 
-    if (index != -1) {
+    if (index != -1 && m_boardSquares[index]) {
         std::unique_ptr<SpriteNode> xNode(new SpriteNode(texture));
         xNode->move( marginOffset + (stepOffset * ((index % 3) + 1)), (stepOffset * ((index / 3) + 1)) + marginOffset);
         attachChild(std::move(xNode));
+        m_boardSquares[index] = 0;
     }
 }
