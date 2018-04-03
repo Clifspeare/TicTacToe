@@ -43,6 +43,7 @@ void Game::render()
 
 void Game::update()
 {
+    m_root.update();
 }
 
 void Game::setup()

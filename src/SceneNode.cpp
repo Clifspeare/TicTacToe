@@ -31,3 +31,12 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode &node)
     m_children.erase(found);
     return result;
 }
+
+void SceneNode::update()
+{
+    onUpdate();
+
+    for (const Ptr& node : m_children) {
+        node->update();
+    }
+}
