@@ -36,37 +36,28 @@ int GameBoard::getClickedSquare(sf::Vector2f coordinate)
 
 GameBoard::GameBoard(sf::Texture &texture) : SpriteNode(texture)
 {
-    m_boardSquares = new int[9];
+    m_boardSquares = new MarkNode::MarkNode::MarkType[9];
     for (int i = 0; i < 9; ++i) {
-        m_boardSquares[i] = -1;
+        m_boardSquares[i] = MarkNode::MarkType::NONE;
     }
 }
 
-void GameBoard::handleClickEvent(double x, double y)
+void GameBoard::handleClickEvent(sf::Mouse::Button button, double x, double y)
 {
-    sf::Vector2f clickCoordinate(x, y);
-    int indexOfClickedSquare = getClickedSquare(clickCoordinate);
-    auto texture = new sf::Texture();
-    if (lastPlaced == 0 || lastPlaced == 2) {
-        texture->loadFromFile("X.png");
-        lastPlaced = 1;
-    }
-    else {
-        texture->loadFromFile("O.png");
-        lastPlaced = 2;
-    }
-    placeMark(indexOfClickedSquare, *texture);
+    int indexOfClickedSquare = getClickedSquare(sf::Vector2f(x, y));
+    MarkNode::MarkType type = ( (button == sf::Mouse::Button::Left) ? MarkNode::MarkType::X : MarkNode::MarkType::O );
+    placeMark(indexOfClickedSquare, type);
 }
 
-void GameBoard::placeMark(int index, sf::Texture& texture)
+void GameBoard::placeMark(int index, MarkNode::MarkType type)
 {
     float marginOffset = 25.0f / 2;
     float stepOffset = 75.0f;
 
-    if (index != -1 && m_boardSquares[index]) {
-        std::unique_ptr<SpriteNode> xNode(new SpriteNode(texture));
-        xNode->move( marginOffset + (stepOffset * ((index % 3) + 1)), (stepOffset * ((index / 3) + 1)) + marginOffset);
-        attachChild(std::move(xNode));
-        m_boardSquares[index] = 0;
+    if (index != -1 && (m_boardSquares[index] == MarkNode::MarkType::NONE)) {
+        std::unique_ptr<MarkNode> mark(new MarkNode(type));
+        mark->move( marginOffset + (stepOffset * ((index % 3) + 1)), (stepOffset * ((index / 3) + 1)) + marginOffset);
+        attachChild(std::move(mark));
+        m_boardSquares[index] = type;
     }
 }

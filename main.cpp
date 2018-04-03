@@ -21,7 +21,7 @@ int main() {
                     window.close();
                     break;
                 case sf::Event::MouseButtonPressed:
-                    root.handleClickEvent(event.mouseButton.x, event.mouseButton.y);
+                    root.handleClickEvent(event.mouseButton.button, event.mouseButton.x, event.mouseButton.y);
                     break;
             }
         }
