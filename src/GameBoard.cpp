@@ -61,3 +61,7 @@ void GameBoard::placeMark(int index, MarkNode::MarkType type)
         m_boardSquares[index] = type;
     }
 }
+
+void GameBoard::onUpdate()
+{
+}

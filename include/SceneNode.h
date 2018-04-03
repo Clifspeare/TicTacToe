@@ -21,8 +21,8 @@ public:
 
     void update();
 private:
-    virtual void onDraw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
-    virtual void onUpdate() = 0;
+    virtual void onDraw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void onUpdate();
 
     SceneNode* m_parent;
     std::vector<Ptr> m_children;

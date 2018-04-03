@@ -40,3 +40,15 @@ void SceneNode::update()
         node->update();
     }
 }
+
+void SceneNode::onDraw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+
+}
+
+void SceneNode::onUpdate()
+{
+
+}
+
+

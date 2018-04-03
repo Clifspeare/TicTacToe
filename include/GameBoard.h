@@ -18,6 +18,8 @@ private:
     int getClickedSquare(sf::Vector2f coordinate);
     void placeMark(int index, MarkNode::MarkType type);
 
+    void onUpdate() override;
+
     /*
      * Represents the 9 possible locations on a 3x3 grid by index 1-9.
      */

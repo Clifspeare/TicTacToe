@@ -27,11 +27,15 @@ void Game::handleEvents()
             case sf::Event::Closed:
                 m_window.close();
                 break;
-            case sf::Event::MouseButtonPressed:
-                m_root.handleClickEvent(m_event.mouseButton.button, m_event.mouseButton.x, m_event.mouseButton.y);
-                break;
         }
     }
+    sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        m_root.handleClickEvent(sf::Mouse::Left, mousePos.x, mousePos.y);
+    } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+        m_root.handleClickEvent(sf::Mouse::Right, mousePos.x, mousePos.y);
+    }
+
 }
 
 void Game::render()
