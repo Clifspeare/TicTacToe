@@ -13,15 +13,11 @@ Player::Player(Player::Type playerType, MarkNode::MarkType markType)
     m_mark = markType;
 }
 
-bool Player::handleDirectInput(sf::Window &window, GameBoard::MarksQueue &marksQueue)
+bool Player::handleDirectInput(sf::Event event, GameBoard::MarksQueue &marksQueue)
 {
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        marksQueue.push(std::pair<MarkNode::MarkType, sf::Vector2i>(m_mark, mousePos));
-        return true;
-    } else {
-        return false;
-    }
+    sf::Vector2i mousePos = sf::Vector2i(event.mouseButton.x, event.mouseButton.y);
+    marksQueue.push(std::pair<MarkNode::MarkType, sf::Vector2i>(m_mark, mousePos));
+    return true;
 }
 
 bool Player::handleNetworkInput()

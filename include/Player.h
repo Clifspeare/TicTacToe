@@ -20,7 +20,7 @@ public:
 public:
     explicit Player(Type playerType, MarkNode::MarkType markType);
 
-    bool handleDirectInput(sf::Window& render, GameBoard::MarksQueue& marksQueue);
+    bool handleDirectInput(sf::Event event, GameBoard::MarksQueue& marksQueue);
     bool handleNetworkInput();
     bool handleGeneratedInput(GameBoard::MarksQueue& marksQueue);
 

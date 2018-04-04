@@ -28,22 +28,24 @@ void Game::run()
 
 void Game::handleEvents()
 {
+    Player p = m_playerQueue.front();
+    bool didTurn = false;
+
     while (m_window.pollEvent(m_event)) {
         switch (m_event.type) {
             case sf::Event::Closed:
                 m_window.close();
                 break;
+            case sf::Event::MouseButtonPressed:
+                p = m_playerQueue.front();
+                if (p.getType() == Player::Type::HUMAN) {
+                    didTurn = p.handleDirectInput(m_event, m_root.getMarksToPlace());
+                }
         }
     }
-    Player p = m_playerQueue.front();
-    bool didTurn = false;
-    if (p.getType() == Player::Type::HUMAN) {
-        didTurn = p.handleDirectInput(m_window, m_root.getMarksToPlace());
-    } else if (p.getType() == Player::Type::AI) {
+
+    if (p.getType() == Player::Type::AI) {
         didTurn = p.handleGeneratedInput(m_root.getMarksToPlace());
-    } else {
-        std::cout << "UH OH" << std::endl;
-        //UH OH
     }
     if (didTurn) {
         m_playerQueue.push(p);
