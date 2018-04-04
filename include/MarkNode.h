@@ -19,6 +19,8 @@ public:
 public:
     explicit MarkNode(MarkType type);
 
+    static std::string getNameOfMark(MarkType type);
+
     MarkType m_type;
 
     sf::Texture &getTextureFromMarkType(MarkType type);

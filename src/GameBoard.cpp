@@ -117,7 +117,7 @@ MarkNode::MarkType GameBoard::checkDiagonal(int index, MarkNode::MarkType *array
 }
 
 
-bool GameBoard::has3InARow()
+MarkNode::MarkType GameBoard::markWith3InARow()
 {
     // diagonal: add 4, add 4; add 2, add 2; horizontal: add 1, add 2; vertical: add 3, add 3;
     /*
@@ -146,10 +146,7 @@ bool GameBoard::has3InARow()
             break;
         }
     }
-    if (winningMark != MarkNode::MarkType::NONE) {
-        return true;
-    }
-    return false;
+    return winningMark;
 }
 
 bool GameBoard::isFull()

@@ -20,7 +20,7 @@ public:
     MarksQueue& getMarksToPlace();
     int getClickedSquare(sf::Vector2i coordinate);
     bool hasMarkOnIndex(int boardIndex);
-    bool has3InARow();
+    MarkNode::MarkType markWith3InARow();
     bool isFull();
 private:
     void placeMark(int index, MarkNode::MarkType type);

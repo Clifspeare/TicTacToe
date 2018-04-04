@@ -66,8 +66,9 @@ void Game::render()
 
 void Game::update()
 {
-    if (m_root.has3InARow()) {
+    if ((m_root.markWith3InARow() != MarkNode::MarkType::NONE) || (m_root.isFull())) {
         m_gameIsWon = true;
+        std::cout << "WINNER IS: " << MarkNode::getNameOfMark(m_root.markWith3InARow());
     }
     m_root.update();
 }

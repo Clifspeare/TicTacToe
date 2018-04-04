@@ -23,3 +23,15 @@ sf::Texture &MarkNode::getTextureFromMarkType(MarkNode::MarkType type)
     texture->loadFromFile(texturePath);
     return *texture;
 }
+
+std::string MarkNode::getNameOfMark(MarkNode::MarkType type)
+{
+    switch(type) {
+        case O:
+            return "O";
+        case X:
+            return "X";
+        case NONE:
+            return "CAT GOT THE GAME >:(";
+    }
+}
