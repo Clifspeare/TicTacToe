@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <wait.h>
 
 #include "GameBoard.h"
 #include "Game.h"
@@ -24,7 +25,23 @@ void Game::run()
         update();
         render();
     }
+    sf::RectangleShape rect(sf::Vector2f(m_window.getSize().x, m_window.getSize().y));
+    rect.setFillColor(sf::Color::Blue);
+    sf::Font font;
+    font.loadFromFile("/usr/share/fonts/truetype/hack/Hack-Regular.ttf");
+    sf::Text text("GAME OVER.", font);
+    sf::Text text1("Winner:  " + MarkNode::getNameOfMark(m_root.markWith3InARow()), font);
+    text.move(((m_window.getSize().x / 2) - (text.getLocalBounds().width / 2)), 0);
+    text1.move(((m_window.getSize().x / 2) - (text.getLocalBounds().width / 2)), text.getLocalBounds().height + text.getLocalBounds().height / 2);
 
+    while (m_gameIsWon && m_window.isOpen()) {
+        handleEvents();
+        m_window.clear(sf::Color::Black);
+        m_window.draw(rect);
+        m_window.draw(text);
+        m_window.draw(text1);
+        m_window.display();
+    }
     m_window.close();
 }
 
