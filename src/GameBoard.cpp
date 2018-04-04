@@ -42,13 +42,6 @@ GameBoard::GameBoard(sf::Texture &texture) : SpriteNode(texture)
     }
 }
 
-void GameBoard::handleClickEvent(sf::Mouse::Button button, double x, double y)
-{
-    int indexOfClickedSquare = getClickedSquare(sf::Vector2i(x, y));
-    MarkNode::MarkType type = ( (button == sf::Mouse::Button::Left) ? MarkNode::MarkType::X : MarkNode::MarkType::O );
-    placeMark(indexOfClickedSquare, type);
-}
-
 void GameBoard::placeMark(int index, MarkNode::MarkType type)
 {
     float marginOffset = 25.0f / 2;
@@ -64,7 +57,13 @@ void GameBoard::placeMark(int index, MarkNode::MarkType type)
 
 void GameBoard::onUpdate()
 {
-
+    while (!m_marksToPlace.empty()) {
+        auto pair = m_marksToPlace.front();
+        int indexOfClickedSquare = getClickedSquare(pair.second);
+        auto type = pair.first;
+        placeMark(indexOfClickedSquare, type);
+        m_marksToPlace.pop();
+    }
 }
 
 std::queue<std::pair<MarkNode::MarkType, sf::Vector2i>> &GameBoard::getMarksToPlace()

@@ -31,9 +31,9 @@ void Game::handleEvents()
     }
     sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        m_root.handleClickEvent(sf::Mouse::Left, mousePos.x, mousePos.y);
+        m_root.getMarksToPlace().push(std::pair<MarkNode::MarkType, sf::Vector2i>(MarkNode::MarkType::X, mousePos));
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-        m_root.handleClickEvent(sf::Mouse::Right, mousePos.x, mousePos.y);
+        m_root.getMarksToPlace().push(std::pair<MarkNode::MarkType, sf::Vector2i>(MarkNode::MarkType::O, mousePos));
     }
 
 }

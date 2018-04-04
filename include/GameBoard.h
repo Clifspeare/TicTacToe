@@ -18,8 +18,6 @@ public:
     GameBoard(sf::Texture& texture);
 
     MarksQueue& getMarksToPlace();
-
-    void handleClickEvent(sf::Mouse::Button button, double x, double y);
 private:
     int getClickedSquare(sf::Vector2i coordinate);
     void placeMark(int index, MarkNode::MarkType type);
