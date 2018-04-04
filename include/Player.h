@@ -18,12 +18,14 @@ public:
         NETWORK
     };
 public:
-    explicit Player(Type playerType);
+    explicit Player(Type playerType, MarkNode::MarkType markType);
 
     void handleDirectInput(sf::Window& render, GameBoard::MarksQueue& marksQueue);
     void handleNetworkInput();
+    void handleGeneratedInput(GameBoard::MarksQueue& marksQueue);
 private:
     Type m_type;
+    MarkNode::MarkType m_mark;
 };
 
 

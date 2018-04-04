@@ -31,6 +31,7 @@ private:
     GameBoard m_root;
     sf::Texture* m_tempTexture;
     Player m_player;
+    Player m_aiPlayer;
 };
 
 

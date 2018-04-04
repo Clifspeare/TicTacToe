@@ -5,7 +5,9 @@
 #include "GameBoard.h"
 #include "Game.h"
 
-Game::Game() : m_window(sf::VideoMode(375, 375), "TicTacToe"), m_event(), m_root(getTextureForBoard()), m_player(Player::Type::HUMAN)
+Game::Game() : m_window(sf::VideoMode(375, 375), "TicTacToe"), m_event()
+        , m_root(getTextureForBoard()), m_player(Player::Type::HUMAN, MarkNode::MarkType::X)
+        , m_aiPlayer(Player::Type::AI, MarkNode::MarkType::O)
 {
 }
 
@@ -30,6 +32,7 @@ void Game::handleEvents()
         }
     }
     m_player.handleDirectInput(m_window, m_root.getMarksToPlace());
+    m_aiPlayer.handleGeneratedInput(m_root.getMarksToPlace());
 }
 
 void Game::render()
