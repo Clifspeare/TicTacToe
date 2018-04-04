@@ -11,7 +11,7 @@ find_package(SFML 2 REQUIRED network audio graphics window system)
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
 # compilation directives
-add_executable(${PROJECT_NAME} src/main.cpp src/SceneNode.cpp include/SceneNode.h src/SpriteNode.cpp include/SpriteNode.h src/GameBoard.cpp include/GameBoard.h src/MarkNode.cpp include/MarkNode.h src/Game.cpp include/Game.h)
+add_executable(${PROJECT_NAME} src/main.cpp src/SceneNode.cpp include/SceneNode.h src/SpriteNode.cpp include/SpriteNode.h src/GameBoard.cpp include/GameBoard.h src/MarkNode.cpp include/MarkNode.h src/Game.cpp include/Game.h Player.cpp include/Player.h)
 
 # linking, etc
 target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES})

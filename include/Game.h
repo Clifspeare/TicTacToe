@@ -10,6 +10,7 @@
 #include <SFML/Window/Event.hpp>
 #include "SpriteNode.h"
 #include "GameBoard.h"
+#include "Player.h"
 
 class Game
 {
@@ -29,6 +30,7 @@ private:
     sf::Event m_event;
     GameBoard m_root;
     sf::Texture* m_tempTexture;
+    Player m_player;
 };
 
 

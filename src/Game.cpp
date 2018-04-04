@@ -5,7 +5,7 @@
 #include "GameBoard.h"
 #include "Game.h"
 
-Game::Game() : m_window(sf::VideoMode(375, 375), "TicTacToe"), m_event(), m_root(getTextureForBoard())
+Game::Game() : m_window(sf::VideoMode(375, 375), "TicTacToe"), m_event(), m_root(getTextureForBoard()), m_player(Player::Type::HUMAN)
 {
 }
 
@@ -29,13 +29,7 @@ void Game::handleEvents()
                 break;
         }
     }
-    sf::Vector2i mousePos = sf::Mouse::getPosition(m_window);
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        m_root.getMarksToPlace().push(std::pair<MarkNode::MarkType, sf::Vector2i>(MarkNode::MarkType::X, mousePos));
-    } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-        m_root.getMarksToPlace().push(std::pair<MarkNode::MarkType, sf::Vector2i>(MarkNode::MarkType::O, mousePos));
-    }
-
+    m_player.handleDirectInput(m_window, m_root.getMarksToPlace());
 }
 
 void Game::render()
