@@ -81,7 +81,10 @@ bool GameBoard::checkHorizontal(int index, MarkNode::MarkType* array)
     if (array[index] == MarkNode::MarkType::NONE)
         return false;
     MarkNode::MarkType type = array[index];
-    return array[index + 1] == type && array[index + 2] == type;
+    if (array[index+1] == type && array[index+2] == type) {
+        return true;
+    }
+    return false;
 }
 
 bool GameBoard::checkVertical(int index, MarkNode::MarkType* array)
@@ -89,7 +92,10 @@ bool GameBoard::checkVertical(int index, MarkNode::MarkType* array)
     if (array[index] == MarkNode::MarkType::NONE)
         return false;
     MarkNode::MarkType type = array[index];
-    return array[index + 3] == type && array[index + 3*2] == type;
+    if (array[index + 3] == type && array[index + 3*2] == type) {
+        return true;
+    }
+    return false;
 }
 
 bool GameBoard::checkDiagonal(int index, MarkNode::MarkType* array)
@@ -98,9 +104,15 @@ bool GameBoard::checkDiagonal(int index, MarkNode::MarkType* array)
         return false;
     MarkNode::MarkType type = array[index];
     if (index % 3 == 0) {
-        return array[index + 4] == type && array[index + 4*2] == type;
+        if (array[index + 4] == type && array[index + 4*2] == type) {
+            return true;
+        }
+        return false;
     } else {
-        return array[index + 2] == type && array[index + 2*2] == type;
+        if (array[index + 2] == type && array[index + 2*2] == type) {
+            return true;
+        }
+        return false;
     }
 }
 
