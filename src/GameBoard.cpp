@@ -6,7 +6,7 @@
 #include <memory>
 #include <iostream>
 
-int GameBoard::getClickedSquare(sf::Vector2f coordinate)
+int GameBoard::getClickedSquare(sf::Vector2i coordinate)
 {
     /*
      * The gameboard has 9 locations centered in the sprite with large border margins. (0 - 8)
@@ -44,7 +44,7 @@ GameBoard::GameBoard(sf::Texture &texture) : SpriteNode(texture)
 
 void GameBoard::handleClickEvent(sf::Mouse::Button button, double x, double y)
 {
-    int indexOfClickedSquare = getClickedSquare(sf::Vector2f(x, y));
+    int indexOfClickedSquare = getClickedSquare(sf::Vector2i(x, y));
     MarkNode::MarkType type = ( (button == sf::Mouse::Button::Left) ? MarkNode::MarkType::X : MarkNode::MarkType::O );
     placeMark(indexOfClickedSquare, type);
 }
@@ -64,4 +64,10 @@ void GameBoard::placeMark(int index, MarkNode::MarkType type)
 
 void GameBoard::onUpdate()
 {
+
+}
+
+std::queue<std::pair<MarkNode::MarkType, sf::Vector2i>> &GameBoard::getMarksToPlace()
+{
+    return m_marksToPlace;
 }
