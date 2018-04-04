@@ -31,6 +31,7 @@ private:
     GameBoard m_root;
     sf::Texture* m_tempTexture;
     std::queue<Player> m_playerQueue;
+    bool m_gameIsWon = false;
 };
 
 

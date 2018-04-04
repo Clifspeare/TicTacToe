@@ -19,11 +19,13 @@ void Game::run()
 {
     setup();
 
-    while (m_window.isOpen()) {
+    while (m_window.isOpen() && !m_gameIsWon) {
         handleEvents();
         update();
         render();
     }
+
+    m_window.close();
 }
 
 void Game::handleEvents()
@@ -39,13 +41,15 @@ void Game::handleEvents()
             case sf::Event::MouseButtonPressed:
                 p = m_playerQueue.front();
                 if (p.getType() == Player::Type::HUMAN) {
-                    didTurn = p.handleDirectInput(m_event, m_root.getMarksToPlace());
+                    didTurn = p.handleDirectInput(m_event, m_root.getMarksToPlace())
+                              && !m_root.hasMarkOnIndex(m_root.getClickedSquare(m_root.getMarksToPlace().back().second));
                 }
         }
     }
 
     if (p.getType() == Player::Type::AI) {
-        didTurn = p.handleGeneratedInput(m_root.getMarksToPlace());
+        didTurn = p.handleGeneratedInput(m_root.getMarksToPlace())
+                  && !m_root.hasMarkOnIndex(m_root.getClickedSquare(m_root.getMarksToPlace().back().second));
     }
     if (didTurn) {
         m_playerQueue.push(p);
@@ -62,6 +66,9 @@ void Game::render()
 
 void Game::update()
 {
+    if (m_root.has3InARow()) {
+        m_gameIsWon = true;
+    }
     m_root.update();
 }
 

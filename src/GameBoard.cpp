@@ -70,3 +70,54 @@ std::queue<std::pair<MarkNode::MarkType, sf::Vector2i>> &GameBoard::getMarksToPl
 {
     return m_marksToPlace;
 }
+
+bool GameBoard::hasMarkOnIndex(int boardIndex)
+{
+    return m_boardSquares[boardIndex] != MarkNode::MarkType::NONE;
+}
+
+bool GameBoard::checkHorizontal(int index, MarkNode::MarkType* array)
+{
+    if (array[index] == MarkNode::MarkType::NONE)
+        return false;
+    MarkNode::MarkType type = array[index];
+    return array[index + 1] == type && array[index + 2] == type;
+}
+
+bool GameBoard::checkVertical(int index, MarkNode::MarkType* array)
+{
+    if (array[index] == MarkNode::MarkType::NONE)
+        return false;
+    MarkNode::MarkType type = array[index];
+    return array[index + 3] == type && array[index + 3*2] == type;
+}
+
+bool GameBoard::checkDiagonal(int index, MarkNode::MarkType* array)
+{
+    if (array[index] == MarkNode::MarkType::NONE)
+        return false;
+    MarkNode::MarkType type = array[index];
+    if (index % 3 == 0) {
+        return array[index + 4] == type && array[index + 4*2] == type;
+    } else {
+        return array[index + 2] == type && array[index + 2*2] == type;
+    }
+}
+
+
+bool GameBoard::has3InARow()
+{
+    // diagonal: add 4, add 4; add 2, add 2; horizontal: add 1, add 2; vertical: add 3, add 3;
+    /*
+     * for top-left (index 0), check horizontal, vertical, and diagonal.
+     * for top-right (index 2), vertical, and diagonal (horizontal is included)
+     * for top-middle, check vertical.  (diagonal impossible, horizontal included).
+     *
+     * for middle-left (index 3), check horizontal.
+     * for bottom-left (index 6), check horizontal
+     */
+    
+    return checkHorizontal(0, m_boardSquares) || checkHorizontal(3, m_boardSquares) || checkHorizontal(6, m_boardSquares)
+            || checkVertical(0, m_boardSquares) || checkVertical(1, m_boardSquares) || checkVertical(2, m_boardSquares)
+            || checkDiagonal(0, m_boardSquares) || checkDiagonal(2, m_boardSquares);
+}

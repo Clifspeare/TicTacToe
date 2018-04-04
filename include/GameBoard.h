@@ -18,9 +18,14 @@ public:
     GameBoard(sf::Texture& texture);
 
     MarksQueue& getMarksToPlace();
-private:
     int getClickedSquare(sf::Vector2i coordinate);
+    bool hasMarkOnIndex(int boardIndex);
+    bool has3InARow();
+private:
     void placeMark(int index, MarkNode::MarkType type);
+    bool checkDiagonal(int index, MarkNode::MarkType* array);
+    bool checkVertical(int index, MarkNode::MarkType* array);
+    bool checkHorizontal(int index, MarkNode::MarkType* array);
 
     void onUpdate() override;
 
