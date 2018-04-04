@@ -76,43 +76,43 @@ bool GameBoard::hasMarkOnIndex(int boardIndex)
     return m_boardSquares[boardIndex] != MarkNode::MarkType::NONE;
 }
 
-bool GameBoard::checkHorizontal(int index, MarkNode::MarkType* array)
+MarkNode::MarkType GameBoard::checkHorizontal(int index, MarkNode::MarkType *array)
 {
     if (array[index] == MarkNode::MarkType::NONE)
-        return false;
+        return MarkNode::MarkType::NONE;
     MarkNode::MarkType type = array[index];
     if (array[index+1] == type && array[index+2] == type) {
-        return true;
+        return type;
     }
-    return false;
+    return MarkNode::MarkType::NONE;
 }
 
-bool GameBoard::checkVertical(int index, MarkNode::MarkType* array)
+MarkNode::MarkType GameBoard::checkVertical(int index, MarkNode::MarkType *array)
 {
     if (array[index] == MarkNode::MarkType::NONE)
-        return false;
+        return MarkNode::MarkType::NONE;
     MarkNode::MarkType type = array[index];
     if (array[index + 3] == type && array[index + 3*2] == type) {
-        return true;
+        return type;
     }
-    return false;
+    return MarkNode::MarkType::NONE;
 }
 
-bool GameBoard::checkDiagonal(int index, MarkNode::MarkType* array)
+MarkNode::MarkType GameBoard::checkDiagonal(int index, MarkNode::MarkType *array)
 {
     if (array[index] == MarkNode::MarkType::NONE)
-        return false;
+        return MarkNode::MarkType::NONE;
     MarkNode::MarkType type = array[index];
     if (index % 3 == 0) {
         if (array[index + 4] == type && array[index + 4*2] == type) {
-            return true;
+            return type;
         }
-        return false;
+        return MarkNode::MarkType::NONE;
     } else {
         if (array[index + 2] == type && array[index + 2*2] == type) {
-            return true;
+            return type;
         }
-        return false;
+        return MarkNode::MarkType::NONE;
     }
 }
 
@@ -128,8 +128,36 @@ bool GameBoard::has3InARow()
      * for middle-left (index 3), check horizontal.
      * for bottom-left (index 6), check horizontal
      */
-    
-    return checkHorizontal(0, m_boardSquares) || checkHorizontal(3, m_boardSquares) || checkHorizontal(6, m_boardSquares)
-            || checkVertical(0, m_boardSquares) || checkVertical(1, m_boardSquares) || checkVertical(2, m_boardSquares)
-            || checkDiagonal(0, m_boardSquares) || checkDiagonal(2, m_boardSquares);
+
+    MarkNode::MarkType winningMark = MarkNode::MarkType::NONE;
+    MarkNode::MarkType markValue[8];
+
+    markValue[0] = checkHorizontal(0, m_boardSquares);
+    markValue[1] = checkHorizontal(3, m_boardSquares);
+    markValue[2] = checkHorizontal(6, m_boardSquares);
+    markValue[3] = checkVertical(0, m_boardSquares);
+    markValue[4] = checkVertical(1, m_boardSquares);
+    markValue[5] = checkVertical(2, m_boardSquares);
+    markValue[6] = checkDiagonal(0, m_boardSquares);
+    markValue[7] = checkDiagonal(2, m_boardSquares);
+    for (int i = 0; i < 8; ++i) {
+        if (markValue[i] != MarkNode::MarkType::NONE) {
+            winningMark = markValue[i];
+            break;
+        }
+    }
+    if (winningMark != MarkNode::MarkType::NONE) {
+        return true;
+    }
+    return false;
+}
+
+bool GameBoard::isFull()
+{
+    for (int i = 0; i < 9; ++i) {
+        if (m_boardSquares[i] == MarkNode::MarkType::NONE) {
+            return false;
+        }
+    }
+    return true;
 }
