@@ -20,9 +20,11 @@ public:
 public:
     explicit Player(Type playerType, MarkNode::MarkType markType);
 
-    void handleDirectInput(sf::Window& render, GameBoard::MarksQueue& marksQueue);
-    void handleNetworkInput();
-    void handleGeneratedInput(GameBoard::MarksQueue& marksQueue);
+    bool handleDirectInput(sf::Window& render, GameBoard::MarksQueue& marksQueue);
+    bool handleNetworkInput();
+    bool handleGeneratedInput(GameBoard::MarksQueue& marksQueue);
+
+    Type getType() {return m_type;}
 private:
     Type m_type;
     MarkNode::MarkType m_mark;

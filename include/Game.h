@@ -30,8 +30,7 @@ private:
     sf::Event m_event;
     GameBoard m_root;
     sf::Texture* m_tempTexture;
-    Player m_player;
-    Player m_aiPlayer;
+    std::queue<Player> m_playerQueue;
 };
 
 

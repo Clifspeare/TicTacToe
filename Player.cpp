@@ -13,20 +13,23 @@ Player::Player(Player::Type playerType, MarkNode::MarkType markType)
     m_mark = markType;
 }
 
-void Player::handleDirectInput(sf::Window &window, GameBoard::MarksQueue &marksQueue)
+bool Player::handleDirectInput(sf::Window &window, GameBoard::MarksQueue &marksQueue)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         marksQueue.push(std::pair<MarkNode::MarkType, sf::Vector2i>(m_mark, mousePos));
+        return true;
+    } else {
+        return false;
     }
 }
 
-void Player::handleNetworkInput()
+bool Player::handleNetworkInput()
 {
     //TODO
 }
 
-void Player::handleGeneratedInput(GameBoard::MarksQueue& marksQueue)
+bool Player::handleGeneratedInput(GameBoard::MarksQueue& marksQueue)
 {
     float marginOffset = 25.0f / 2;
     float stepOffset = 75.0f;
@@ -38,4 +41,5 @@ void Player::handleGeneratedInput(GameBoard::MarksQueue& marksQueue)
     float y = (stepOffset * ((index / 3) + 1)) + marginOffset;
     sf::Vector2i mousePos(x, y);
     marksQueue.push(std::pair<MarkNode::MarkType, sf::Vector2i>(m_mark, mousePos));
+    return true;
 }

@@ -2,13 +2,17 @@
 // Created by spencer on 4/3/18.
 //
 
+#include <iostream>
+
 #include "GameBoard.h"
 #include "Game.h"
 
 Game::Game() : m_window(sf::VideoMode(375, 375), "TicTacToe"), m_event()
-        , m_root(getTextureForBoard()), m_player(Player::Type::HUMAN, MarkNode::MarkType::X)
-        , m_aiPlayer(Player::Type::AI, MarkNode::MarkType::O)
+        , m_root(getTextureForBoard())
+        , m_playerQueue()
 {
+    m_playerQueue.push(Player(Player::Type::HUMAN, MarkNode::MarkType::X));
+    m_playerQueue.push(Player(Player::Type::AI, MarkNode::MarkType::O));
 }
 
 void Game::run()
@@ -31,8 +35,20 @@ void Game::handleEvents()
                 break;
         }
     }
-    m_player.handleDirectInput(m_window, m_root.getMarksToPlace());
-    m_aiPlayer.handleGeneratedInput(m_root.getMarksToPlace());
+    Player p = m_playerQueue.front();
+    bool didTurn = false;
+    if (p.getType() == Player::Type::HUMAN) {
+        didTurn = p.handleDirectInput(m_window, m_root.getMarksToPlace());
+    } else if (p.getType() == Player::Type::AI) {
+        didTurn = p.handleGeneratedInput(m_root.getMarksToPlace());
+    } else {
+        std::cout << "UH OH" << std::endl;
+        //UH OH
+    }
+    if (didTurn) {
+        m_playerQueue.push(p);
+        m_playerQueue.pop();
+    }
 }
 
 void Game::render()
